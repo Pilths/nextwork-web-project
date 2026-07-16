@@ -1,6 +1,6 @@
 #!/bin/bash
 sudo yum install tomcat -y
-sudo yum -y install httpd
+sudo yum install httpd -y
 sudo cat << EOF > /etc/httpd/conf.d/tomcat_manager.conf
 <VirtualHost *:80>
   ServerAdmin root@localhost
