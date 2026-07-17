@@ -1,9 +1,10 @@
 #!/bin/bash
-isExistApp="$(pgrep httpd)"
-if [[ -n $isExistApp ]]; then
-sudo systemctl stop httpd.service
+set -euo pipefail
+
+if pgrep httpd >/dev/null 2>&1; then
+  systemctl stop httpd.service || true
 fi
-isExistApp="$(pgrep tomcat)"
-if [[ -n $isExistApp ]]; then
-sudo systemctl stop tomcat.service
+
+if pgrep tomcat >/dev/null 2>&1; then
+  systemctl stop tomcat.service || true
 fi

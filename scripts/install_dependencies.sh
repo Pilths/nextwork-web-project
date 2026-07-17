@@ -1,7 +1,17 @@
 #!/bin/bash
-sudo yum install tomcat -y
-sudo yum install httpd -y
-sudo cat << EOF > /etc/httpd/conf.d/tomcat_manager.conf
+set -euo pipefail
+
+echo "Installing required packages..."
+if ! command -v yum >/dev/null 2>&1; then
+  echo "yum is not available on this system" >&2
+  exit 1
+fi
+
+yum install -y tomcat httpd
+
+mkdir -p /etc/httpd/conf.d
+
+cat > /etc/httpd/conf.d/tomcat_manager.conf <<'EOF'
 <VirtualHost *:80>
   ServerAdmin root@localhost
   ServerName app.nextwork.com

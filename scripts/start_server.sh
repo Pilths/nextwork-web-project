@@ -1,5 +1,7 @@
 #!/bin/bash
-sudo systemctl start tomcat.service
-sudo systemctl enable tomcat.service
-sudo systemctl start httpd.service
-sudo systemctl enable httpd.service
+set -euo pipefail
+
+echo "Starting web services..."
+systemctl enable tomcat.service httpd.service
+systemctl start tomcat.service
+systemctl start httpd.service
