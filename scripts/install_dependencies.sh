@@ -35,30 +35,12 @@ install_if_missing() {
 }
 
 install_if_missing httpd
-install_if_missing tomcat9
+install_if_missing tomcat # Corrected to standard 'tomcat' name
 
 mkdir -p /etc/httpd/conf.d
 
-if command -v sudo >/dev/null 2>&1 && [ "$(id -u)" -ne 0 ]; then
-  SUDO="sudo"
-else
-  SUDO=""
-fi
-
 if [ -w /etc/httpd/conf.d ]; then
   cat > /etc/httpd/conf.d/tomcat_manager.conf <<'EOF'
-<VirtualHost *:80>
-  ServerAdmin root@localhost
-  ServerName app.nextwork.com
-  DefaultType text/html
-  ProxyRequests off
-  ProxyPreserveHost On
-  ProxyPass / http://localhost:8080/nextwork-web-project/
-  ProxyPassReverse / http://localhost:8080/nextwork-web-project/
-</VirtualHost>
-EOF
-elif [ -n "${SUDO}" ]; then
-  ${SUDO} tee /etc/httpd/conf.d/tomcat_manager.conf >/dev/null <<'EOF'
 <VirtualHost *:80>
   ServerAdmin root@localhost
   ServerName app.nextwork.com
